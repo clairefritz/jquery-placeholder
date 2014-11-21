@@ -4,8 +4,11 @@
     // Opera Mini v7 doesn’t support placeholder although its DOM seems to indicate so
     var isOperaMini = Object.prototype.toString.call(window.operamini) == '[object OperaMini]';
     var isIE = window.navigator.userAgent.indexOf('MSIE') > 0 || window.MSStream;
-    var isInputSupported = 'placeholder' in document.createElement('input') && !isOperaMini && !isIE;
-    var isTextareaSupported = 'placeholder' in document.createElement('textarea') && !isOperaMini && !isIE;
+    var isAndroid = navigator.userAgent.indexOf("Android") >= 0;
+    var webkitVer = parseInt((/WebKit\/([0-9]+)/.exec(navigator.appVersion) || 0)[1], 10) || void 0;
+    var isNativeAndroid = isAndroid && webkitVer <= 534 && navigator.vendor.indexOf("Google") === 0;
+    var isInputSupported = 'placeholder' in document.createElement('input') && !isOperaMini && !isIE && !isNativeAndroid;
+    var isTextareaSupported = 'placeholder' in document.createElement('textarea') && !isOperaMini && !isIE && !isNativeAndroid;
     var prototype = $.fn;
     var valHooks = $.valHooks;
     var propHooks = $.propHooks;
